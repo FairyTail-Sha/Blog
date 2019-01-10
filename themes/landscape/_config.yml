@@ -2,7 +2,10 @@
 menu:
   Home: /
   Archives: /archives
-rss: /atom.xml
+  Demo: /demo
+  About: /about
+  Category: /category
+# rss: /atom.xml # rss 注释
 
 # Content
 excerpt_link: Read More

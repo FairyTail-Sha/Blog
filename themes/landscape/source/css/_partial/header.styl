@@ -33,11 +33,21 @@
   background-size: cover
   z-index: -1
 
+#dragon
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background: url(dragon-url) center #000000
+  background-size: cover
+  z-index: -1
+
 #header-title
-  text-align: center
+  text-align: right 
   height: logo-size
   position: absolute
-  top: 50%
+  top: 80%
   left: 0
   margin-top: logo-size * -0.5
 
@@ -91,7 +101,7 @@ $nav-link
 
 .main-nav-link
   @extend $nav-link
-  font-weight: 300
+  font-weight: 1000
   letter-spacing: 1px
   @media mq-mobile
     display: none

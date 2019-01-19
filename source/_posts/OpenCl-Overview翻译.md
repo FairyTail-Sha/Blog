@@ -6,6 +6,7 @@ tags: OpenCl
 
 # 翻译
 
+```md
 - [翻译](#%E7%BF%BB%E8%AF%91)
   - [OpenCL Overview](#opencl-overview)
   - [Accelerate .NET Applications with Alea GPU](#accelerate-net-applications-with-alea-gpu)
@@ -15,6 +16,7 @@ tags: OpenCl
       - [An Ecosystem of Algorithms and Libraries](#an-ecosystem-of-algorithms-and-libraries)
         - [Full Device-Side Functionality](#full-device-side-functionality)
         - [Alea Unbound: CUB Parallel Algorithms in F](#alea-unbound-cub-parallel-algorithms-in-f)
+```
 
 heterogeneous 异构
 a wide spectrum 广泛

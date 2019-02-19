@@ -4,19 +4,17 @@ date: 2019-01-10 11:24:24
 tags: OpenCl
 ---
 
-# An example of OpenCL program
-
 In this section we will discuss(详述) all **the necessary steps** to run an OpenCL application.
 
-## Basic software requirements
+# Basic software requirements
 
 略【基础软件配置】
 
-## Installing and setting up an OpenCL compliant computer
+# Installing and setting up an OpenCL compliant computer
 
 安装CUDA即可，因为其中会带有OpenCL
 
-## 在 opencl 中实现 saxpy 例程
+# 在 opencl 中实现 saxpy 例程
 
 ```C
 // 普通C代码
@@ -153,7 +151,7 @@ int main(void)
 > * 在字符串换行处加一个反斜杠’\’，下一行前不能有空格或者Tab键；
 > * 使用双引号。
 
-## OpenCL program flow
+# OpenCL program flow
 
 1. Allocates memory for host buffers and initializes them.
 2. Gets platform and device information. This is discussed in detail in Chapter 2, OpenCL Architecture.

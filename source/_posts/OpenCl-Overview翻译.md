@@ -282,3 +282,4 @@ public static void DeviceScanInclusive()
       Assert.AreEqual(actual, inputs.ScanInclusive(0, (a, b) => a + b).ToArray());
    }
 }
+```

@@ -2,9 +2,6 @@
 menu:
   Home: /
   Archives: /archives
-  Demo: /demo
-  About: /about
-  Category: /category
 # rss: /atom.xml # rss 注释
 
 # Content

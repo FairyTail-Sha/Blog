@@ -4,6 +4,12 @@ date: 2019-01-10 11:24:24
 tags: OpenCl
 ---
 
+- [Basic software requirements](#basic-software-requirements)
+- [Installing and setting up an OpenCL compliant computer](#installing-and-setting-up-an-opencl-compliant-computer)
+- [在 opencl 中实现 saxpy 例程](#%E5%9C%A8-opencl-%E4%B8%AD%E5%AE%9E%E7%8E%B0-saxpy-%E4%BE%8B%E7%A8%8B)
+- [C++字符换行](#c%E5%AD%97%E7%AC%A6%E6%8D%A2%E8%A1%8C)
+- [OpenCL program flow](#opencl-program-flow)
+
 In this section we will discuss(详述) all **the necessary steps** to run an OpenCL application.
 
 # Basic software requirements
@@ -64,36 +70,56 @@ int main(void)
     cl_platform_id * platforms = NULL;
     cl_uint num_platforms;
 
-    cl_int clStatus = clGetPlatformIDs(0, NULL, &num_platforms); // 获得平台数目
-    platforms = (cl_platform_id*)malloc(sizeof(cl_platform_id)* num_platforms); // 根据平台数目为 platforms 分配空间
-    clStatus = clGetPlatformIDs(num_platforms, platforms, NULL); // 获得平台id s
+    // 获得平台数目
+    cl_int clStatus = clGetPlatformIDs(0, NULL, &num_platforms);  
+
+    // 根据平台数目为 platforms 分配空间
+    platforms = (cl_platform_id*)
+        malloc(sizeof(cl_platform_id)* num_platforms);  
+
+     // 获得平台id s  
+    clStatus = clGetPlatformIDs(num_platforms, platforms, NULL);
 
     // 设备
     cl_device_id *device_list = NULL;
     cl_uint num_devices;
 
-    clStatus = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, 0, NULL, &num_devices);
-    device_list = (cl_device_id*)malloc(sizeof(cl_device_id)* num_devices); // 根据设备数目为 device_list 分配空间
-    clStatus = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, num_devices, device_list, NULL); // 获得设备id s
+    clStatus = clGetDeviceIDs
+        (platforms[0], CL_DEVICE_TYPE_GPU, 0, NULL, &num_devices);
+    
+    // 根据设备数目为 device_list 分配空间
+    device_list = 
+        (cl_device_id*)malloc(sizeof(cl_device_id)* num_devices); 
+    // 获得设备id s
+    clStatus = clGetDeviceIDs
+        (platforms[0], CL_DEVICE_TYPE_GPU, num_devices, device_list, NULL);
 
     // 上下文
     cl_context context;
-    context = clCreateContext(NULL, num_devices, device_list, NULL, NULL, &clStatus);
+    context = clCreateContext
+        (NULL, num_devices, device_list, NULL, NULL, &clStatus);
 
     // command queue
-    cl_command_queue command_queue = clCreateCommandQueue(context, device_list[0], 0, &clStatus);
+    cl_command_queue command_queue = 
+        clCreateCommandQueue(context, device_list[0], 0, &clStatus);
 // 计算前准备，开辟空间 Copy数据
     // 为每个数组开辟空间
-    cl_mem A_clmem = clCreateBuffer(context, CL_MEM_READ_ONLY, VECTOR_SIZE * sizeof(float), NULL, &clStatus);
-    cl_mem B_clmem = clCreateBuffer(context, CL_MEM_READ_ONLY, VECTOR_SIZE * sizeof(float), NULL, &clStatus);
-    cl_mem C_clmem = clCreateBuffer(context, CL_MEM_READ_ONLY, VECTOR_SIZE * sizeof(float), NULL, &clStatus);
+    cl_mem A_clmem = clCreateBuffer
+        (context, CL_MEM_READ_ONLY, VECTOR_SIZE * sizeof(float), NULL, &clStatus);
+    cl_mem B_clmem = clCreateBuffer
+        (context, CL_MEM_READ_ONLY, VECTOR_SIZE * sizeof(float), NULL, &clStatus);
+    cl_mem C_clmem = clCreateBuffer
+        (context, CL_MEM_READ_ONLY, VECTOR_SIZE * sizeof(float), NULL, &clStatus);
 
     // Copy A,B to device | Host -> Device
-    clStatus = clEnqueueWriteBuffer(command_queue, A_clmem, CL_TRUE, 0, VECTOR_SIZE * sizeof(float), A, 0, NULL,NULL);
-    clStatus = clEnqueueWriteBuffer(command_queue, B_clmem, CL_TRUE, 0, VECTOR_SIZE * sizeof(float), B, 0, NULL, NULL);
+    clStatus = clEnqueueWriteBuffer
+        (command_queue, B_clmem, CL_TRUE, 0, VECTOR_SIZE * sizeof(float), B, 0, NULL, NULL);
+    clStatus = clEnqueueWriteBuffer
+        (command_queue, A_clmem, CL_TRUE, 0, VECTOR_SIZE * sizeof(float), A, 0, NULL,NULL);
 // Program - Create Build
     // Create Program from kernel source code
-    cl_program program = clCreateProgramWithSource(context, 1, (const char **)&saxpy_kernel, NULL, &clStatus);
+    cl_program program = clCreateProgramWithSource
+        (context, 1, (const char **)&saxpy_kernel, NULL, &clStatus);
 
     // Build Program
     clStatus = clBuildProgram(program, 1, device_list, NULL, NULL, NULL);
@@ -110,10 +136,12 @@ int main(void)
     // Execute the OpenCL kernal
     size_t global_size = VECTOR_SIZE; // 要处理的整个列表
     size_t local_size = 64; // 一次要处理的数量
-    clStatus = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL, NULL);
+    clStatus = clEnqueueNDRangeKernel
+        (command_queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL, NULL);
 // 读取结果
     // Read C  | Device -> Host
-    clStatus = clEnqueueReadBuffer(command_queue, C_clmem, CL_TRUE, 0, VECTOR_SIZE * sizeof(float), C, 0, NULL, NULL);
+    clStatus = clEnqueueReadBuffer
+        (command_queue, C_clmem, CL_TRUE, 0, VECTOR_SIZE * sizeof(float), C, 0, NULL, NULL);
 // 后续处理 - 等待 显示 释放资源
     // Clean up and wait for all the comands to complete.
     clStatus = clFlush(command_queue);
@@ -144,17 +172,19 @@ int main(void)
 }
 ```
 
->**C++字符换行**  
+# C++字符换行
+
 在C/C++语言中，可能我们要书写的一个字符串太长了，放在一行上影响代码的可读性。这时我们就需要多行书写了。  
 字符串多行书写有两种规则：  
->
-> * 在字符串换行处加一个反斜杠’\’，下一行前不能有空格或者Tab键；
-> * 使用双引号。
+
+* 在字符串换行处加一个反斜杠’\’，下一行前不能有空格或者Tab键；
+* 使用双引号。
 
 # OpenCL program flow
 
 1. Allocates memory for host buffers and initializes them.
-2. Gets platform and device information. This is discussed in detail in Chapter 2, OpenCL Architecture.
+2. Gets platform and device information. This is discussed in detail in  
+   Chapter 2, OpenCL Architecture.
 3. Sets up the platform.
 4. Gets the devices list and chooses the type of device you want to run on.
 5. Creates an OpenCL context for the device.
@@ -165,7 +195,9 @@ int main(void)
 10. Builds the program and creates the OpenCL kernel.
 11. Sets the arguments of the kernel.
 12. Executes the OpenCL kernel on the device.
-13. Reads back the memory from the device to the host buffer. This step is optional, you may want to keep the data resident in the device for further processing.
+13. Reads back the memory from the device to the host buffer. This step is
+    optional, you may want to keep the data resident in the device for  
+    further processing.
 14. Cleans up and waits for all the commands to complete.
 15. Finally releases all OpenCL allocated objects and host buffers.
 

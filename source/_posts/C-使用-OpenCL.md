@@ -1,7 +1,7 @@
 ---
 title: 'C# 使用 `OpenCL`'
 date: 2018-12-08 14:56:08
-tags:
+tags: OpenCL
 ---
 
 # 使用`OpenCL.Net`小demo尝试

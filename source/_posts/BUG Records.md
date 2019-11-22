@@ -1,8 +1,9 @@
-﻿# BUG Records
-
-标签（空格分隔）： bug angular
-
+﻿---
+title: Angualr BUG Records
+date: 2018-10-23
+tags: angular
 ---
+
 *2018/10/23*
 
 ## bug-ts-1

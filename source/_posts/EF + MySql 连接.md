@@ -1,4 +1,8 @@
-﻿# EF + MySql 连接
+﻿---
+title: EF + MySql 连接
+date: 2019-2-2
+tags: mysql ef
+---
 
 标签（空格分隔）： mysql ef 数据库操作
 
